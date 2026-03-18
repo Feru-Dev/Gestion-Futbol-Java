@@ -1,0 +1,19 @@
+# --- Archivos compilados (Java) ---
+*.class
+bin/
+out/
+
+# --- Configuración de Eclipse (NO SUBIR) ---
+.metadata/
+.settings/
+.project
+.classpath
+.factorypath
+
+# --- Archivos de sistema ---
+.DS_Store
+Thumbs.db
+
+# --- Logs y archivos temporales ---
+*.log
+tmp/
