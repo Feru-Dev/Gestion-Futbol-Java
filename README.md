@@ -11,14 +11,16 @@ Este es un proyecto integral desarrollado durante mi **1º año de DAW**. Consis
 * Gestionar la persistencia de datos en **MySQL** mediante conectores JDBC.
 * Crear una interfaz de usuario intuitiva y funcional utilizando **Java Swing**.
 
-## 🚀 Funcionalidades Actuales (6/9)
+## 🚀 Funcionalidades Actuales (9/9)
 - [x] **Ver Jugadores:** Listado dinámico en JTable desde la BD.
 - [x] **Agregar Jugador:** Inserción de nuevos registros con validación.
 - [x] **Buscar Jugador por DNI:** Consulta filtrada rápida.
+- [x] **Modificar Jugador Por DNI:** Modificacion filtrada.
 - [x] **Ver Equipos:** Visualización de la tabla de clubes.
 - [x] **Agregar Equipo:** Gestión de nuevas entidades deportivas.
+- [x] **Buscar Equipo por ID:** Consulta filtrada rápida.
+- [x] **Modificar Equipo por ID:** Modificacion filtrada.
 - [x] **Salir:** Cierre controlado con confirmación de usuario.
-- [ ] *Próximamente:* Modificación de registros y búsqueda avanzada de equipos.
 
 ## 🛠️ Detalles Técnicos
 * **Patrón de Diseño:** MVC para un código escalable y mantenible.
