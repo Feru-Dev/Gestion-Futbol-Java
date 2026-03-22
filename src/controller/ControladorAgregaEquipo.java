@@ -36,7 +36,21 @@ public class ControladorAgregaEquipo implements ActionListener {
 
 		//boton AGREGAR
 		if(e.getSource() == vista.btnAgregar) {
-			
+			//se llama al metodo para agregar un equipo
+			agregarEquipo();
+		}
+		
+		//boton CERRAR
+		if(e.getSource() == vista.btnCerrar) {
+			//cierra la ventana y libera recursos
+			vista.dispose();
+		}
+		
+	}
+	
+	public void agregarEquipo() {
+		try {
+            
 			//se recoge lo que escribe el usuario en los recuadros de la ventana
 			int IdEquipo = Integer.parseInt(vista.txtEquipoId.getText());
 			String nombre = vista.txtNombre.getText();
@@ -48,17 +62,20 @@ public class ControladorAgregaEquipo implements ActionListener {
 			//se manda el equipo creado al dao para que lo inserte en la BBDD
 			equipoDAO.agregarEquipo(equipo);
 			
-		}
-		
-		//boton CERRAR
-		if(e.getSource() == vista.btnCerrar) {
-			//cierra la ventana y libera recursos
-			vista.dispose();
-		}
-		
+			//se muestra por la tabla
+			vista.txtFeedback.setText("Equipo agregado Correctamente: \n" + equipo.toString());
+
+            // Limpiar campos de entrada
+            vista.txtEquipoId.setText("");
+            vista.txtNombre.setText("");
+            vista.txtCiudad.setText("");
+
+        } catch(NumberFormatException ex) {
+            vista.txtFeedback.setText("Error:ID de equipo deben ser números!");
+        } catch(Exception ex) {
+            vista.txtFeedback.setText("Error al agregar los datos: " + ex.getMessage());
+        }
 	}
-	
-	
 
 
 }

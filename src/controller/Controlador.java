@@ -31,6 +31,8 @@ public class Controlador implements ActionListener {
         this.vista.btnModificarJugador.addActionListener(this);
         this.vista.btnVerEquipos.addActionListener(this);
         this.vista.btnAgregarEquipo.addActionListener(this);
+        this.vista.btnBuscarEquipo.addActionListener(this);
+        this.vista.btnModificarEquipo.addActionListener(this);
         this.vista.btnSalir.addActionListener(this);
     }
 
@@ -136,6 +138,78 @@ public class Controlador implements ActionListener {
         	new ControladorAgregaEquipo(ventanaAgregarEquipo);
         }
         
+        //==============================
+        // 7 - Buscar jugador por DNI
+       //==============================
+        
+        if(e.getSource() == vista.btnBuscarEquipo) {
+        	String input = JOptionPane.showInputDialog("Introdue el ID del equipo");
+        	int id = Integer.parseInt(input);
+        	Equipo equipo = equipoDAO.getEquipoPorId(id);
+        	ArrayList<Equipo> listaEquipos = new ArrayList<Equipo>();
+        	if(equipo != null) {
+        		listaEquipos.add(equipo);
+        	}
+        	actualizarTablaEquipo(listaEquipos);
+        	
+        }
+        
+      //================================
+        // 8 - Modificar Equipo por ID
+        //================================
+        if(e.getSource() == vista.btnModificarEquipo) {
+        	//se pide el id con un JOptionPane
+        	String input = JOptionPane.showInputDialog(null, "Introduce el ID del equipo que quieres modificar");
+        	
+        	//si se da a CANCELAR o a la "X" para cerrar la ventana, salta esta advertencia
+			if (input == null) {
+				JOptionPane.showMessageDialog(null, "Info: Has cancelado la modificacion", "Info", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			
+			// ESTA ES LA CLAVE: Solo si el usuario NO dio a cancelar ni dejó vacío
+			if( !input.isEmpty() && input != null ) {
+				
+				//se busca al equipo por id
+				Equipo equipo = equipoDAO.getEquipoPorId(Integer.parseInt(input));
+				
+				//
+				if(equipo != null) {
+					
+					//se printea el equipo recuperado por el ID introducido
+					ArrayList<Equipo> listaEquipos = new ArrayList<Equipo>();
+		        	if(equipo != null) {
+		        		listaEquipos.add(equipo);
+		        	}
+		        	//se usa el metodo para imprimirlo en la tabla
+		        	actualizarTablaEquipo(listaEquipos);
+					
+		        	//se parsea a int el input de antes
+					int id = Integer.parseInt(input);
+					
+					//ventana de modificar jugador
+	            	VentanaModificarEquipo ventanaModificar = new VentanaModificarEquipo();
+	            	
+	                // Solo creamos el controlador si tenemos un DNI válido
+	            	new controladorModificarEquipo(ventanaModificar, id);
+	                
+	                ventanaModificar.setVisible(true);
+	                
+					return;
+				}
+				//si se introduce un ID que no coincide salta el WArning
+				JOptionPane.showMessageDialog(null, "Advertencia: El ID introducido no existe", "Warning", JOptionPane.WARNING_MESSAGE);
+				
+			}
+			
+			//si el campo se deja vacio
+			if (input.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Advertencia: Has dejado el campo vacio", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+        	
+        	
+        }
 
         // 9 - Salir
         if(e.getSource() == vista.btnSalir) {
@@ -206,12 +280,11 @@ public class Controlador implements ActionListener {
                     j.getIdEquipo()
             };
             model.addRow(fila);
-        
-
+    
         vista.tabla.setModel(model);
     }
     
-    // Método para actualizar la JTable con una lista de jugadores
+    // Método para actualizar la JTable con una lista de EQUIPOS
     private void actualizarTablaEquipo(ArrayList<Equipo> lista) {
         String[] columnas = {"ID Equipo", "Nombre", "Ciudad"};
         DefaultTableModel model = new DefaultTableModel(columnas, 0);
